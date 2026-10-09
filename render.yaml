@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: arkx-paper-runner
+    runtime: python
+    region: singapore
+    plan: starter
+    numInstances: 1
+    autoDeployTrigger: "off"
+    buildCommand: python -m py_compile service.py calculate_20261008.py
+    startCommand: python service.py
+    healthCheckPath: /health
+    maxShutdownDelaySeconds: 90
+    disk:
+      name: arkx-jobs
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: RUNNER_TOKEN
+        generateValue: true
+      - key: DATA_DIR
+        value: /var/data
